@@ -1,1 +1,1 @@
-# node-typescript-graphql-starter
+# Reddit Clone Website Server Backend
