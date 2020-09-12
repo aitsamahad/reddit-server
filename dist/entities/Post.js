@@ -38,6 +38,14 @@ __decorate([
     core_1.Property(),
     __metadata("design:type", String)
 ], Post.prototype, "title", void 0);
+__decorate([
+    type_graphql_1.Field(() => Boolean),
+    __metadata("design:type", Boolean)
+], Post.prototype, "error", void 0);
+__decorate([
+    type_graphql_1.Field(() => String),
+    __metadata("design:type", String)
+], Post.prototype, "message", void 0);
 Post = __decorate([
     type_graphql_1.ObjectType(),
     core_1.Entity()

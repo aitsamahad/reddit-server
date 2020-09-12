@@ -20,6 +20,12 @@ export class Post {
   @Property()
   title!: string;
 
+  @Field(() => Boolean)
+  error: boolean;
+
+  @Field(() => String)
+  message: string;
+
   //   @ManyToOne() // when you provide correct type hint, ORM will read it for you
   //   author!: Author;
 

@@ -12,3 +12,8 @@ export interface PostStructure {
   error: boolean;
   message: string;
 }
+
+export interface Error {
+  error: boolean;
+  message: string;
+}
