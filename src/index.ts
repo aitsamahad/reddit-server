@@ -8,7 +8,8 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { TestResolver } from "./resolvers/test";
-import { PostResolver } from "./resolvers/post";
+import { PostResolver } from "./resolvers/post/post";
+import { UserResolver } from "./resolvers/user/user";
 
 (async function () {
   // MikroORM Initializing and Config/Migration setup
@@ -22,7 +23,7 @@ import { PostResolver } from "./resolvers/post";
   // Apollo Server
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [TestResolver, PostResolver],
+      resolvers: [TestResolver, PostResolver, UserResolver],
       validate: false,
     }),
     context: () => ({ em: orm.em, token: "some token!" }),

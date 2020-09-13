@@ -1,6 +1,7 @@
 import { Resolver, Query, Mutation, Ctx, Arg, Int } from "type-graphql";
-import { Post } from "../entities/Post";
-import { MyContext, PostStructure, Error } from "src/types";
+import { Post } from "../../entities/Post";
+import { MyContext } from "src/generic-types";
+import { PostResponse } from "./types";
 
 @Resolver()
 export class PostResolver {
@@ -17,44 +18,42 @@ export class PostResolver {
     @Arg("id", () => Int) id: number,
     @Ctx() ctx: MyContext
   ): Promise<Post | null> {
-    // console.log(ctx.token);
-    // const post = ctx.em.find(Post, { id: id });
-    // if (post) return {}
     return ctx.em.findOne(Post, { id });
   }
 
   // Create a post
-  @Mutation(() => Post)
+  @Mutation(() => PostResponse)
   async createPost(
     @Arg("title") title: string,
     @Ctx() ctx: MyContext
-  ): Promise<Post> {
+  ): Promise<PostResponse> {
     const newPost = ctx.em.create(Post, { title });
     await ctx.em.persistAndFlush(newPost);
-    return newPost;
+
+    return {
+      post: newPost,
+    };
   }
 
   // Update a post
-  @Mutation(() => Post, { nullable: true })
+  @Mutation(() => PostResponse, { nullable: true })
   async updatePost(
     @Arg("id") id: number,
     @Arg("title") title: string,
     @Ctx() ctx: MyContext
-  ): Promise<Post | Error | null> {
+  ): Promise<PostResponse> {
     const post = await ctx.em.findOne(Post, { id });
 
     if (!post)
       return {
-        error: true,
-        message: "Post not found!",
+        errors: [{ field: "id", message: "Post not found" }],
       };
 
     if (typeof post !== "undefined") {
       post.title = title;
       await ctx.em.persistAndFlush(post);
     }
-
-    return post;
+    return { post };
   }
 
   // Delete a post

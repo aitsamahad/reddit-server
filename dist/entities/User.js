@@ -8,39 +8,48 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Post = void 0;
+exports.User = void 0;
 const core_1 = require("@mikro-orm/core");
 const type_graphql_1 = require("type-graphql");
-let Post = class Post {
+const graphql_type_uuid_1 = __importDefault(require("graphql-type-uuid"));
+let User = class User {
     constructor() {
         this.createdAt = new Date();
         this.updatedAt = new Date();
     }
 };
 __decorate([
-    type_graphql_1.Field(() => type_graphql_1.Int),
+    type_graphql_1.Field(() => graphql_type_uuid_1.default),
     core_1.PrimaryKey(),
-    __metadata("design:type", Number)
-], Post.prototype, "id", void 0);
+    core_1.Property({ type: "uuid" }),
+    __metadata("design:type", Object)
+], User.prototype, "id", void 0);
 __decorate([
     type_graphql_1.Field(() => String),
     core_1.Property({ type: "date" }),
     __metadata("design:type", Object)
-], Post.prototype, "createdAt", void 0);
+], User.prototype, "createdAt", void 0);
 __decorate([
     type_graphql_1.Field(() => String),
     core_1.Property({ type: "date", onUpdate: () => new Date() }),
     __metadata("design:type", Object)
-], Post.prototype, "updatedAt", void 0);
+], User.prototype, "updatedAt", void 0);
 __decorate([
     type_graphql_1.Field(() => String),
+    core_1.Property({ unique: true }),
+    __metadata("design:type", String)
+], User.prototype, "username", void 0);
+__decorate([
     core_1.Property(),
     __metadata("design:type", String)
-], Post.prototype, "title", void 0);
-Post = __decorate([
+], User.prototype, "password", void 0);
+User = __decorate([
     type_graphql_1.ObjectType(),
     core_1.Entity()
-], Post);
-exports.Post = Post;
-//# sourceMappingURL=Post.js.map
+], User);
+exports.User = User;
+//# sourceMappingURL=User.js.map

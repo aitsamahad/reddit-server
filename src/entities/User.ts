@@ -1,12 +1,14 @@
 import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
-import { ObjectType, Field, Int } from "type-graphql";
+import { ObjectType, Field } from "type-graphql";
+import GraphQLUUID from "graphql-type-uuid";
 
 @ObjectType()
 @Entity()
-export class Post {
-  @Field(() => Int)
+export class User {
+  @Field(() => GraphQLUUID)
   @PrimaryKey()
-  id!: number;
+  @Property({ type: "uuid" })
+  id!: typeof GraphQLUUID | string;
 
   @Field(() => String)
   @Property({ type: "date" })
@@ -17,8 +19,11 @@ export class Post {
   updatedAt = new Date();
 
   @Field(() => String)
+  @Property({ unique: true })
+  username!: string;
+
   @Property()
-  title!: string;
+  password: string;
 
   //   @ManyToOne() // when you provide correct type hint, ORM will read it for you
   //   author!: Author;

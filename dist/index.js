@@ -19,7 +19,8 @@ const express_1 = __importDefault(require("express"));
 const apollo_server_express_1 = require("apollo-server-express");
 const type_graphql_1 = require("type-graphql");
 const test_1 = require("./resolvers/test");
-const post_1 = require("./resolvers/post");
+const post_1 = require("./resolvers/post/post");
+const user_1 = require("./resolvers/user/user");
 (function () {
     return __awaiter(this, void 0, void 0, function* () {
         const orm = yield core_1.MikroORM.init(mikro_orm_config_1.default);
@@ -28,7 +29,7 @@ const post_1 = require("./resolvers/post");
         const PORT = process.env.PORT || 4545;
         const apolloServer = new apollo_server_express_1.ApolloServer({
             schema: yield type_graphql_1.buildSchema({
-                resolvers: [test_1.TestResolver, post_1.PostResolver],
+                resolvers: [test_1.TestResolver, post_1.PostResolver, user_1.UserResolver],
                 validate: false,
             }),
             context: () => ({ em: orm.em, token: "some token!" }),
